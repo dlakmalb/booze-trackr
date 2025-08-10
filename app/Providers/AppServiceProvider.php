@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Item;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Model::unguard(); // Disable mass assignment protection globally
+
+        Relation::morphMap([
+            'item' => Item::class,
+            'user' => User::class,
+        ]);
     }
 }
